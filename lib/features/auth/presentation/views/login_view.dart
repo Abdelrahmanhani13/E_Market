@@ -147,7 +147,9 @@ class _LoginViewState extends State<LoginView> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.go(AppRouter.kForgotPasswordView);
+                              },
                               child: const Text('Forgot Password?', style: TextStyle(color: Colors.white70)),
                             ),
                           ),
