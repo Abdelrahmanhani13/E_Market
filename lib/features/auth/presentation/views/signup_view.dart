@@ -152,7 +152,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 _obscurePassword
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: Colors.white70,
+                                color: Colors.black,
                               ),
                             ), keyboardType: TextInputType.visiblePassword,
                           ),
@@ -171,7 +171,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 _obscureConfirm
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: Colors.white70,
+                                color: Colors.black,
                               ),
                             ), keyboardType: TextInputType.visiblePassword,
                           ),

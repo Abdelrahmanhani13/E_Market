@@ -138,7 +138,7 @@ class _LoginViewState extends State<LoginView> {
                               onPressed: () => setState(() => _obscureText = !_obscureText),
                               icon: Icon(
                                 _obscureText ? Icons.visibility_off : Icons.visibility,
-                                color: Colors.white70,
+                                color: Colors.black,
                               ),
                             ), keyboardType: TextInputType.visiblePassword,
                           ),
