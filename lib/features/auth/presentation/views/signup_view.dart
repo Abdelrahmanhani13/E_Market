@@ -1,10 +1,9 @@
 // views/auth/sign_up_view.dart
 import 'package:e_market/core/utils/app_colors.dart';
-import 'package:e_market/core/utils/app_router.dart';
 import 'package:e_market/core/widgets/custom_text_form_field.dart';
+import 'package:e_market/features/auth/presentation/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -148,7 +147,8 @@ class _SignUpViewState extends State<SignUpView> {
                             Icons.visibility,
                             color: Colors.white70,
                           ),
-                        ), keyboardType: TextInputType.visiblePassword,
+                        ),
+                        keyboardType: TextInputType.visiblePassword,
                       ),
                       const Gap(18),
                       CustomTextFormField(
@@ -164,7 +164,8 @@ class _SignUpViewState extends State<SignUpView> {
                             Icons.visibility,
                             color: Colors.white70,
                           ),
-                        ), keyboardType: TextInputType.visiblePassword,
+                        ),
+                        keyboardType: TextInputType.visiblePassword,
                       ),
                       const Gap(28),
                       SizedBox(
@@ -198,7 +199,12 @@ class _SignUpViewState extends State<SignUpView> {
                             style: TextStyle(color: Colors.white70),
                           ),
                           GestureDetector(
-                            onTap: () => context.go(AppRouter.kLoginView),
+                            onTap: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginView(),
+                              ),
+                            ),
                             child: const Text(
                               'Login Now',
                               style: TextStyle(

@@ -1,4 +1,4 @@
-import 'package:e_market/core/utils/app_router.dart';
+import 'package:e_market/features/auth/presentation/views/login_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.router,
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'E Market',
       theme: ThemeData(),
+      home: LoginView(),
     );
   }
 }
