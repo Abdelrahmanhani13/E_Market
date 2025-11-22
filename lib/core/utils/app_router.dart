@@ -2,6 +2,7 @@
 
 import 'package:e_market/features/auth/presentation/views/forget_password_view.dart';
 import 'package:e_market/features/auth/presentation/views/login_view.dart';
+import 'package:e_market/features/auth/presentation/views/profile_view.dart';
 import 'package:e_market/features/auth/presentation/views/signup_view.dart';
 import 'package:e_market/features/home/presentation/views/home_view.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,7 @@ abstract class AppRouter {
   static const kLoginView = '/loginView';
   static const kSignUpView = '/signUpView';
   static const kForgotPasswordView = '/forgotPasswordView';
+  static const kProfileView = '/profileView';
 
   static final router = GoRouter(
     routes: [
@@ -30,6 +32,10 @@ abstract class AppRouter {
       GoRoute(
         path: kForgotPasswordView,
         builder: (context, state) => const ForgotPasswordView(),
+      ),
+      GoRoute(
+        path: kProfileView,
+        builder: (context, state) => const ProfileView(),
       ),
     ],
   );
