@@ -1,9 +1,7 @@
 // views/profile/profile_view.dart
-
 import 'package:e_market/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'dart:ui';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -46,8 +44,6 @@ class ProfileView extends StatelessWidget {
             child: Column(
               children: [
                 const Gap(30),
-
-                // Avatar مكان الصورة (أيقونة شخص فقط)
                 Container(
                   width: 130,
                   height: 130,
@@ -69,17 +65,13 @@ class ProfileView extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-
                 const Gap(24),
-
-                // الاسم والإيميل
                 const Text(
-                  'Abdelrahman Hani',
+                  'Ahmed Mohamed',
                   style: TextStyle(
                     fontSize: 34,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    letterSpacing: 0.5,
                   ),
                 ),
                 const Gap(10),
@@ -88,101 +80,93 @@ class ProfileView extends StatelessWidget {
                   style: TextStyle(fontSize: 17, color: Colors.white70),
                 ),
                 const Gap(12),
-
-                // Premium Badge
-
-                // القائمة الزجاجية
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(32),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                    child: Container(
-                      padding: const EdgeInsets.all(28),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.18),
-                        borderRadius: BorderRadius.circular(32),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.3),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.25),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.white38, width: 1.5),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.star, color: Colors.amber, size: 22),
+                      Gap(8),
+                      Text(
+                        'Premium Member',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          _buildTile(
-                            Icons.person_outline,
-                            'Edit Profile',
-                            () {},
-                          ),
-                          _buildDivider(),
-                          _buildTile(
-                            Icons.shopping_bag_outlined,
-                            'My Orders',
-                            () {},
-                          ),
-                          _buildDivider(),
-                          _buildTile(
-                            Icons.location_on_outlined,
-                            'Delivery Addresses',
-                            () {},
-                          ),
-                          _buildDivider(),
-                          _buildTile(
-                            Icons.payment_outlined,
-                            'Payment Methods',
-                            () {},
-                          ),
-                          _buildDivider(),
-                          _buildTile(Icons.favorite_border, 'Wishlist', () {}),
-                          _buildDivider(),
-                          _buildTile(
-                            Icons.help_outline,
-                            'Help & Support',
-                            () {},
-                          ),
-                          _buildDivider(),
-                          _buildTile(
-                            Icons.settings_outlined,
-                            'Settings',
-                            () {},
-                          ),
+                    ],
+                  ),
+                ),
+                const Gap(50),
 
-                          const Gap(28),
-
-                          // زر Logout
-                          SizedBox(
-                            width: double.infinity,
-                            height: 56,
-                            child: OutlinedButton(
-                              onPressed: () {
-                                // TODO: Logout
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('تم تسجيل الخروج بنجاح'),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                              },
-                              style: OutlinedButton.styleFrom(
-                                side: const BorderSide(
-                                  color: Colors.white,
-                                  width: 2.5,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18),
-                                ),
-                              ),
-                              child: const Text(
-                                'Logout',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                Container(
+                  padding: const EdgeInsets.all(28),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.16),
+                    borderRadius: BorderRadius.circular(32),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.3),
+                      width: 1.8,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 30,
+                        offset: const Offset(0, 15),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      _tile(Icons.person_outline, 'Edit Profile', () {}),
+                      _divider(),
+                      _tile(Icons.shopping_bag_outlined, 'My Orders', () {}),
+                      _divider(),
+                      _tile(
+                        Icons.location_on_outlined,
+                        'Delivery Addresses',
+                        () {},
+                      ),
+                      _divider(),
+                      _tile(Icons.payment_outlined, 'Payment Methods', () {}),
+                      _divider(),
+                      _tile(Icons.favorite_border, 'Wishlist', () {}),
+                      _divider(),
+                      _tile(Icons.settings_outlined, 'Settings', () {}),
+                      const Gap(28),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(
+                              color: Colors.white,
+                              width: 2.5,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
                             ),
                           ),
-                        ],
+                          child: const Text(
+                            'Logout',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 const Gap(40),
@@ -194,35 +178,28 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildTile(IconData icon, String title, VoidCallback onTap) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.white, size: 28),
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 17,
-          fontWeight: FontWeight.w500,
-        ),
+  Widget _tile(IconData icon, String title, VoidCallback onTap) => ListTile(
+    leading: Icon(icon, color: Colors.white, size: 28),
+    title: Text(
+      title,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontWeight: FontWeight.w500,
       ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        color: Colors.white70,
-        size: 18,
-      ),
-      onTap: onTap,
-      contentPadding: EdgeInsets.zero,
-      minLeadingWidth: 30,
-    );
-  }
-
-  Widget _buildDivider() {
-    return Divider(
-      color: Colors.white.withOpacity(0.3),
-      height: 32,
-      thickness: 0.8,
-      indent: 56,
-      endIndent: 12,
-    );
-  }
+    ),
+    trailing: const Icon(
+      Icons.arrow_forward_ios,
+      color: Colors.white70,
+      size: 18,
+    ),
+    onTap: onTap,
+  );
+  Widget _divider() => Divider(
+    color: Colors.white.withOpacity(0.3),
+    height: 32,
+    thickness: 0.8,
+    indent: 56,
+    endIndent: 12,
+  );
 }
