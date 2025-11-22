@@ -1,22 +1,24 @@
-import 'package:e_market/core/utils/app_colors.dart';
 import 'package:e_market/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'dart:ui';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class SignUpView extends StatefulWidget {
+  const SignUpView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
-  bool _obscureText = true;
+class _SignUpViewState extends State<SignUpView> with TickerProviderStateMixin {
+  bool _obscurePassword = true;
+  bool _obscureConfirm = true;
+
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmController = TextEditingController();
 
-  // نقلناهم تحت عشان يتعرفوا بعد الـ controller
   late final AnimationController _controller;
   late final Animation<double> _fadeAnimation;
   late final Animation<double> _scaleAnimation;
@@ -25,13 +27,11 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    // 1. أول حاجة نعمل الـ controller
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1400),
     );
 
-    // 2. بعد كده نعمل الـ animations (مهم جدًا الترتيب ده)
     _fadeAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -42,15 +42,16 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
 
-    // 3. نبدأ الأنيميشن
     _controller.forward();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmController.dispose();
     super.dispose();
   }
 
@@ -69,14 +70,14 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
             end: Alignment.bottomCenter,
             colors: isDark
                 ? [
-                    const Color(0xFF0D47A1),
-                    const Color(0xFF1976D2),
-                    const Color(0xFF42A5F5),
+                    const Color(0xFF1B5E20),
+                    const Color(0xFF388E3C),
+                    const Color(0xFF66BB6A),
                   ]
                 : [
-                    const Color(0xFF1976D2),
-                    const Color(0xFF42A5F5),
-                    const Color(0xFF90CAF9),
+                    const Color(0xFF2E7D32),
+                    const Color(0xFF4CAF50),
+                    const Color(0xFFA5D6A7),
                   ],
           ),
         ),
@@ -85,9 +86,10 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
             opacity: _fadeAnimation,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.only(bottom: 20),
               child: Column(
                 children: [
-                  const Gap(60),
+                  const Gap(50),
 
                   // Logo + Title
                   ScaleTransition(
@@ -95,48 +97,48 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                     child: Column(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(22),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withOpacity(0.25),
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 4),
+                            border: Border.all(color: Colors.white, width: 5),
                             boxShadow: const [
                               BoxShadow(
                                 color: Colors.black26,
-                                blurRadius: 20,
-                                offset: Offset(0, 10),
+                                blurRadius: 25,
+                                offset: Offset(0, 12),
                               ),
                             ],
                           ),
                           child: const Icon(
-                            Icons.shopping_bag,
-                            size: 60,
+                            Icons.store_mall_directory,
+                            size: 70,
                             color: Colors.white,
                           ),
                         ),
-                        const Gap(20),
+                        const Gap(24),
                         const Text(
-                          'E Market',
+                          'Create Account',
                           style: TextStyle(
-                            fontSize: 36,
+                            fontSize: 38,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            letterSpacing: 1.5,
+                            letterSpacing: 1.2,
                             shadows: [
                               Shadow(
-                                color: Colors.black26,
-                                offset: Offset(0, 2),
-                                blurRadius: 4,
+                                color: Colors.black38,
+                                offset: Offset(0, 3),
+                                blurRadius: 6,
                               ),
                             ],
                           ),
                         ),
                         const Text(
-                          'Shop Smart, Live Easy',
+                          'Join E Market Today!',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 17,
                             color: Colors.white70,
-                            fontWeight: FontWeight.w300,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ],
@@ -145,26 +147,26 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
 
                   const Gap(50),
 
-                  // Login Card (Glassmorphism)
+                  // Sign Up Card
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(28),
+                      borderRadius: BorderRadius.circular(32),
                       child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                         child: Container(
                           padding: const EdgeInsets.all(32),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(28),
+                            color: Colors.white.withOpacity(0.18),
+                            borderRadius: BorderRadius.circular(32),
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withOpacity(0.3),
                             ),
                           ),
                           child: Column(
                             children: [
                               const Text(
-                                'Welcome Back!',
+                                'Get Started Now',
                                 style: TextStyle(
                                   fontSize: 26,
                                   fontWeight: FontWeight.bold,
@@ -173,14 +175,25 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                               ),
                               const Gap(8),
                               Text(
-                                'Sign in to continue shopping',
+                                'Fill in your details to create an account',
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.white.withOpacity(0.8),
+                                  color: Colors.white.withOpacity(0.85),
                                 ),
                               ),
                               const Gap(32),
 
+                              // Full Name
+                              CustomTextFormField(
+                                controller: _nameController,
+                                hintText: 'Full Name',
+                                keyboardType: TextInputType.name,
+                                prefixIcon: Icons.person_outline,
+                              ),
+                              const Gap(16),
+
+                              // Email
                               CustomTextFormField(
                                 controller: _emailController,
                                 hintText: 'Email Address',
@@ -189,58 +202,67 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                               ),
                               const Gap(16),
 
+                              // Password
                               CustomTextFormField(
                                 controller: _passwordController,
                                 hintText: 'Password',
-                                obscureText: _obscureText,
+                                obscureText: _obscurePassword,
                                 prefixIcon: Icons.lock_outline,
                                 suffixIcon: IconButton(
                                   onPressed: () => setState(
-                                    () => _obscureText = !_obscureText,
+                                    () => _obscurePassword = !_obscurePassword,
                                   ),
                                   icon: Icon(
-                                    _obscureText
+                                    _obscurePassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: Colors.black,
+                                    color: Colors.white70,
                                   ),
-                                ),
-                                keyboardType: TextInputType.visiblePassword,
+                                ), keyboardType: TextInputType.visiblePassword,
                               ),
-                              const Gap(12),
+                              const Gap(16),
 
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'Forgot Password?',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 13,
-                                    ),
+                              // Confirm Password
+                              CustomTextFormField(
+                                controller: _confirmController,
+                                hintText: 'Confirm Password',
+                                obscureText: _obscureConfirm,
+                                prefixIcon: Icons.lock_reset_outlined,
+                                suffixIcon: IconButton(
+                                  onPressed: () => setState(
+                                    () => _obscureConfirm = !_obscureConfirm,
                                   ),
-                                ),
+                                  icon: Icon(
+                                    _obscureConfirm
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.white70,
+                                  ),
+                                ), keyboardType:TextInputType.visiblePassword,
                               ),
-                              const Gap(20),
+                              const Gap(28),
 
+                              // Sign Up Button
                               SizedBox(
                                 width: double.infinity,
-                                height: 56,
+                                height: 58,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // Sign up logic
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.white,
-                                    foregroundColor: AppColors.primaryColor,
-                                    elevation: 10,
+                                    foregroundColor: const Color(0xFF2E7D32),
+                                    elevation: 12,
+                                    shadowColor: Colors.black38,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
+                                      borderRadius: BorderRadius.circular(18),
                                     ),
                                   ),
                                   child: const Text(
-                                    'Login',
+                                    'Create Account',
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 19,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -248,17 +270,20 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                               ),
                               const Gap(24),
 
+                              // Already have account?
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    'Don\'t have an account? ',
+                                    'Already have an account? ',
                                     style: TextStyle(color: Colors.white70),
                                   ),
                                   GestureDetector(
-                                    onTap: () {},
+                                    onTap: () => Navigator.pop(
+                                      context,
+                                    ), // أو انتقل لـ Login
                                     child: const Text(
-                                      'Sign Up',
+                                      'Login Now',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -274,7 +299,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                  const Gap(40),
+                  const Gap(30),
                 ],
               ),
             ),
