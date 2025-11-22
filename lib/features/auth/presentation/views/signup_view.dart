@@ -145,7 +145,7 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                           icon: const Icon(
                             Icons.visibility,
-                            color: Colors.white70,
+                            color: Colors.black,
                           ),
                         ),
                         keyboardType: TextInputType.visiblePassword,
@@ -162,7 +162,7 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                           icon: const Icon(
                             Icons.visibility,
-                            color: Colors.white70,
+                            color: Colors.black,
                           ),
                         ),
                         keyboardType: TextInputType.visiblePassword,

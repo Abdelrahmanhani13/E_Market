@@ -144,7 +144,7 @@ class _LoginViewState extends State<LoginView> {
                               setState(() => _obscureText = !_obscureText),
                           icon: const Icon(
                             Icons.visibility,
-                            color: Colors.white70,
+                            color: Colors.black,
                           ),
                         ),
                         keyboardType: TextInputType.visiblePassword,
