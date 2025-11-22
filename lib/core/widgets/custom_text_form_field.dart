@@ -3,46 +3,48 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
+    required this.keyboardType,
     required this.hintText,
-    required this.textInputType,
     this.suffixIcon,
-    this.onSaved,
+    this.controller,
     this.obscureText = false,
+    this.onSaved,
   });
+
+  final TextInputType keyboardType;
   final String hintText;
-  final TextInputType textInputType;
   final Widget? suffixIcon;
-  final void Function(String?)? onSaved;
+  final TextEditingController? controller;
   final bool obscureText;
+  final void Function(String?)? onSaved;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: obscureText,
       onSaved: onSaved,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'this field is required';
+          return 'the field is required';
         }
         return null;
       },
-      keyboardType: textInputType,
+      keyboardType: keyboardType,
+      controller: controller,
+      obscureText: obscureText,
       decoration: InputDecoration(
-        suffixIcon: suffixIcon,
-        hintStyle: TextStyle(color: const Color(0xFF949D9E)),
         hintText: hintText,
+        suffixIcon: suffixIcon,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(4),
+          borderSide: const BorderSide(color: Color(0xFFE6E9E9), width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(4),
+          borderSide: const BorderSide(color: Color(0xFFE6E9E9), width: 1),
+        ),
+        fillColor: const Color(0XFFF9FAFA),
         filled: true,
-        fillColor: Colors.white,
-        border: buildBorder(),
-        enabledBorder: buildBorder(),
-        focusedBorder: buildBorder(),
       ),
-    );
-  }
-
-  OutlineInputBorder buildBorder() {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
-      borderSide: const BorderSide(width: 1, color: Color(0xFFE6E9E9)),
     );
   }
 }
