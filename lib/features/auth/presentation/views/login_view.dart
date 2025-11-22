@@ -1,3 +1,4 @@
+import 'package:e_market/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -17,34 +18,38 @@ class LoginView extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             Gap(50),
-            Card(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Gap(30),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TextFormField(
-                      // controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your email',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.grey[300]!),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:15),
+              child: Card(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Gap(30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: CustomTextFormField(
+                        hintText: 'Enter Email Address',
+                        textInputType: TextInputType.emailAddress,
                       ),
                     ),
-                  ),
-                ],
+                    Gap(20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: CustomTextFormField(
+                        hintText: 'Enter Password',
+                        obscureText: true, textInputType: TextInputType.visiblePassword,
+                      ),
+                    ),
+                    Gap(30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Login'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

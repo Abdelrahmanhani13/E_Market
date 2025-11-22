@@ -21,7 +21,7 @@ class CustomTextFormField extends StatelessWidget {
       onSaved: onSaved,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'هذا الحقل مطلوب';
+          return 'this field is required';
         }
         return null;
       },
@@ -31,7 +31,7 @@ class CustomTextFormField extends StatelessWidget {
         hintStyle: TextStyle(color: const Color(0xFF949D9E)),
         hintText: hintText,
         filled: true,
-        fillColor: const Color(0xFFF9FAFA),
+        fillColor: Colors.white,
         border: buildBorder(),
         enabledBorder: buildBorder(),
         focusedBorder: buildBorder(),
@@ -41,7 +41,7 @@ class CustomTextFormField extends StatelessWidget {
 
   OutlineInputBorder buildBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(width: 1, color: Color(0xFFE6E9E9)),
     );
   }
