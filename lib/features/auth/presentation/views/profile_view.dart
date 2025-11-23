@@ -45,7 +45,7 @@ class ProfileView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               children: [
-                const Gap(30),
+                const SizedBox(height: 30,),
                 Container(
                   width: 130,
                   height: 130,
@@ -69,7 +69,7 @@ class ProfileView extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const Gap(24),
+                const SizedBox(height: 28,),
                 const Text(
                   'Ahmed Mohamed',
                   style: TextStyle(
@@ -83,7 +83,7 @@ class ProfileView extends StatelessWidget {
                   'ahmed@example.com',
                   style: TextStyle(fontSize: 17, color: Colors.white70),
                 ),
-                const Gap(12),
+                const SizedBox(height: 12),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -99,7 +99,7 @@ class ProfileView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.star, color: Colors.amber, size: 22),
-                      Gap(8),
+                      SizedBox(height: 8,),
                       Text(
                         'Premium Member',
                         style: TextStyle(
@@ -110,7 +110,7 @@ class ProfileView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Gap(50),
+                const SizedBox(height: 50,),
 
                 Container(
                   padding: const EdgeInsets.all(28),
@@ -149,7 +149,7 @@ class ProfileView extends StatelessWidget {
                       _tile(Icons.favorite_border, 'Wishlist', () {}),
                       _divider(),
                       _tile(Icons.settings_outlined, 'Settings', () {}),
-                      const Gap(28),
+                      const SizedBox(height: 28,),
                       SizedBox(
                         width: double.infinity,
                         height: 56,
@@ -177,7 +177,7 @@ class ProfileView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Gap(40),
+                const SizedBox(height: 40,),
               ],
             ),
           ),
