@@ -1,5 +1,6 @@
 import 'package:e_market/features/home/data/categories.dart';
 import 'package:e_market/features/home/presentation/widgets/categories_list.dart';
+import 'package:e_market/features/home/presentation/widgets/product_card.dart';
 import 'package:e_market/features/home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -29,13 +30,12 @@ class HomeView extends StatelessWidget {
           Gap(20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Categories',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+            child: Text('Popular Categories', style: TextStyle(fontSize: 20)),
           ),
-          Gap(10),
+          Gap(15),
           CategoriesList(categories: categories),
+          Gap(20),
+          ProductCard(),
         ],
       ),
     );
