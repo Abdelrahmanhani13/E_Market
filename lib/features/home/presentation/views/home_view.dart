@@ -15,10 +15,10 @@ class HomeView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: GestureDetector(onTap: () {}, child: SearchTextField()),
           ),
+          Gap(20),
+          Image.asset('assets/images/buy.jpg'),
         ],
       ),
     );
   }
 }
-
-
