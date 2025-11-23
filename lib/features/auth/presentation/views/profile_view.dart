@@ -32,7 +32,9 @@ class ProfileView extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               AppColors.primaryColor,
+              // ignore: deprecated_member_use
               AppColors.primaryColor.withOpacity(0.8),
+              // ignore: deprecated_member_use
               AppColors.primaryColor.withOpacity(0.5),
             ],
           ),
@@ -49,10 +51,12 @@ class ProfileView extends StatelessWidget {
                   height: 130,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
+                    // ignore: deprecated_member_use
                     color: Colors.white.withOpacity(0.25),
                     border: Border.all(color: Colors.white, width: 6),
                     boxShadow: [
                       BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.black.withOpacity(0.25),
                         blurRadius: 25,
                         offset: const Offset(0, 12),
@@ -86,6 +90,7 @@ class ProfileView extends StatelessWidget {
                     vertical: 10,
                   ),
                   decoration: BoxDecoration(
+                    // ignore: deprecated_member_use
                     color: Colors.white.withOpacity(0.25),
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(color: Colors.white38, width: 1.5),
@@ -110,14 +115,17 @@ class ProfileView extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(28),
                   decoration: BoxDecoration(
+                    // ignore: deprecated_member_use
                     color: Colors.white.withOpacity(0.16),
                     borderRadius: BorderRadius.circular(32),
                     border: Border.all(
+                      // ignore: deprecated_member_use
                       color: Colors.white.withOpacity(0.3),
                       width: 1.8,
                     ),
                     boxShadow: [
                       BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.black.withOpacity(0.3),
                         blurRadius: 30,
                         offset: const Offset(0, 15),
@@ -196,6 +204,7 @@ class ProfileView extends StatelessWidget {
     onTap: onTap,
   );
   Widget _divider() => Divider(
+    // ignore: deprecated_member_use
     color: Colors.white.withOpacity(0.3),
     height: 32,
     thickness: 0.8,

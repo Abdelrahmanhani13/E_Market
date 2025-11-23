@@ -41,7 +41,9 @@ class _SignUpViewState extends State<SignUpView> {
             end: Alignment.bottomCenter,
             colors: [
               AppColors.primaryColor,
+              // ignore: deprecated_member_use
               AppColors.primaryColor.withOpacity(0.8),
+              // ignore: deprecated_member_use
               AppColors.primaryColor.withOpacity(0.5),
             ],
           ),
@@ -58,11 +60,13 @@ class _SignUpViewState extends State<SignUpView> {
                     Container(
                       padding: const EdgeInsets.all(22),
                       decoration: BoxDecoration(
+                        // ignore: deprecated_member_use
                         color: Colors.white.withOpacity(0.25),
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.white, width: 5),
                         boxShadow: [
                           BoxShadow(
+                            // ignore: deprecated_member_use
                             color: Colors.black.withOpacity(0.2),
                             blurRadius: 20,
                             offset: const Offset(0, 10),
@@ -95,14 +99,17 @@ class _SignUpViewState extends State<SignUpView> {
                 Container(
                   padding: const EdgeInsets.all(32),
                   decoration: BoxDecoration(
+                    // ignore: deprecated_member_use
                     color: Colors.white.withOpacity(0.16),
                     borderRadius: BorderRadius.circular(32),
                     border: Border.all(
+                      // ignore: deprecated_member_use
                       color: Colors.white.withOpacity(0.3),
                       width: 1.8,
                     ),
                     boxShadow: [
                       BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.black.withOpacity(0.3),
                         blurRadius: 30,
                         offset: const Offset(0, 15),
