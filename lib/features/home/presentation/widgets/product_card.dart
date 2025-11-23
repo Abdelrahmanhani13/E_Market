@@ -1,28 +1,33 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_market/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-  });
+  const ProductCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 60),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Card(
         color: Colors.white,
         child: Column(
           children: [
             Stack(
               children: [
-                Image.asset(
-                  'assets/images/buy.jpg',
+                SizedBox(
+                  height: 140,
                   width: double.infinity,
-                  height: 140, // حدد ارتفاع الصورة
-                  fit: BoxFit.cover,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        "https://www.freepik.com/free-psd/shoes-sale-social-media-post-square-banner-template-design_41548881.htm#fromView=search&page=1&position=49&uuid=f7b12465-f2bf-419c-ba1a-b1c58c585f16&query=product",
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    fit: BoxFit.cover,
+                  ),
                 ),
+
                 Container(
                   height: 30,
                   width: 60,
@@ -42,23 +47,21 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
+            Gap(12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     "product name",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   Icon(Icons.favorite_border),
                 ],
               ),
             ),
-            Gap(10),
+            Gap(16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(

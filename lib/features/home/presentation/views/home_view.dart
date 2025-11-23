@@ -20,25 +20,37 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: ListView(
         children: [
-          Gap(20),
+          const Gap(20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GestureDetector(onTap: () {}, child: SearchTextField()),
+            child: GestureDetector(
+              onTap: () {},
+              child: const SearchTextField(),
+            ),
           ),
-          Gap(20),
+          const Gap(20),
           Image.asset('assets/images/buy.jpg'),
-          Gap(20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+          const Gap(20),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text('Popular Categories', style: TextStyle(fontSize: 20)),
           ),
-          Gap(15),
+          const Gap(15),
           CategoriesList(categories: categories),
-          Gap(20),
-          ProductCard(),
+          const Gap(20),
+          // Fixed: Using shrinkWrap and physics
+          ListView.builder(
+            shrinkWrap: true, // Important: allows ListView to size itself
+            physics:
+                const NeverScrollableScrollPhysics(), // Disables inner scroll
+            padding: const EdgeInsets.only(top: 15),
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return const ProductCard();
+            },
+          ),
         ],
       ),
     );
   }
 }
-
