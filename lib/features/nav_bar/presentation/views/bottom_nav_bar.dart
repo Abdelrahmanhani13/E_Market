@@ -4,11 +4,12 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
-
+  BottomNavBar({super.key});
+  final List<Widget>views = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body:views[0],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: Colors.white),
         child: Padding(
