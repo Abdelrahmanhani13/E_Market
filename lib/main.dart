@@ -1,4 +1,4 @@
-import 'package:e_market/features/auth/presentation/views/login_view.dart';
+import 'package:e_market/features/nav_bar/presentation/views/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'E Market',
       theme: ThemeData(),
-      home: LoginView(),
+      home: BottomNavBar(),
     );
   }
 }
