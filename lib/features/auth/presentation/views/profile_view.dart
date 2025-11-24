@@ -1,6 +1,7 @@
 // views/profile/profile_view.dart
 import 'package:e_market/core/utils/app_colors.dart';
 import 'package:e_market/features/auth/presentation/widgets/edit_name.dart';
+import 'package:e_market/features/auth/presentation/widgets/my_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -117,7 +118,14 @@ class ProfileView extends StatelessWidget {
                         );
                       }),
                       _divider(),
-                      _tile(Icons.shopping_bag_outlined, 'My Orders', () {}),
+                      _tile(Icons.shopping_bag_outlined, 'My Orders', () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyOrders(),
+                          ),
+                        );
+                      }),
                       const SizedBox(height: 28),
                       SizedBox(
                         width: double.infinity,
