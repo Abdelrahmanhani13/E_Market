@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -15,23 +14,26 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     try {
       await client.auth.signInWithPassword(email: email, password: password);
       emit(LoginSuccess());
-    }on AuthException catch (e) {
+    } on AuthException catch (e) {
       emit(LoginFailure(message: e.message));
-    }
-     catch (e) {
+    } catch (e) {
       emit(LoginFailure(message: e.toString()));
     }
   }
 
-  Future<void> signUp({required String email, required String password , required String name}) async {
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     emit(SignUpLoading());
     try {
       await client.auth.signUp(email: email, password: password);
+      await addUserData(name: name, email: email);
       emit(SignUpSuccess());
-    }on AuthException catch (e) {
+    } on AuthException catch (e) {
       emit(SignUpFailure(message: e.message));
-    }
-     catch (e) {
+    } catch (e) {
       emit(SignUpFailure(message: e.toString()));
     }
   }
@@ -41,10 +43,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     try {
       await client.auth.signOut();
       emit(LogoutSuccess());
-    }on AuthException catch (e) {
+    } on AuthException catch (e) {
       emit(LogoutFailure(message: e.message));
-    }
-     catch (e) {
+    } catch (e) {
       emit(LogoutFailure(message: e.toString()));
     }
   }
@@ -54,11 +55,29 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     try {
       await client.auth.resetPasswordForEmail(email);
       emit(ResetPasswordSuccess());
-    }on AuthException catch (e) {
+    } on AuthException catch (e) {
       emit(ResetPasswordFailure(message: e.message));
-    }
-     catch (e) {
+    } catch (e) {
       emit(ResetPasswordFailure(message: e.toString()));
+    }
+  }
+
+  Future<void> addUserData({
+    required String name,
+    required String email,
+  }) async {
+    emit(AddUserDataLoading());
+    try {
+      await client.from('users').insert({
+        'user_id': client.auth.currentUser!.id,
+        'name': name,
+        'email': email,
+      });
+      emit(AddUserDataSuccess());
+    } on PostgrestException catch (e) {
+      emit(AddUserDataFailure(message: e.message));
+    } catch (e) {
+      emit(AddUserDataFailure(message: e.toString()));
     }
   }
 }
