@@ -49,6 +49,7 @@ class HomeView extends StatelessWidget {
               return const ProductCard();
             },
           ),
+          
         ],
       ),
     );
