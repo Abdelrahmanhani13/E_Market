@@ -56,8 +56,8 @@ class BottomNavBar extends StatelessWidget {
                   ), // navigation bar padding
                   tabs: [
                     GButton(icon: LineIcons.home, text: 'Home'),
-                    GButton(icon: LineIcons.store, text: 'Likes'),
-                    GButton(icon: LineIcons.heart, text: 'Search'),
+                    GButton(icon: LineIcons.store, text: 'Store'),
+                    GButton(icon: LineIcons.heart, text: 'Favorite'),
                     GButton(icon: LineIcons.user, text: 'Profile'),
                   ],
                 ),
