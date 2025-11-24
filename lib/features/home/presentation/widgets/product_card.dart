@@ -21,7 +21,7 @@ class ProductCard extends StatelessWidget {
                   width: double.infinity,
                   child: CachedNetworkImage(
                     imageUrl:
-                        "https://www.freepik.com/free-psd/shoes-sale-social-media-post-square-banner-template-design_41548881.htm#fromView=search&page=1&position=49&uuid=f7b12465-f2bf-419c-ba1a-b1c58c585f16&query=product",
+                        "https://i.pinimg.com/736x/d7/81/c4/d781c4a98bd0b3bb7bd20b54526c29b8.jpg",
                     placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                     fit: BoxFit.cover,

@@ -1,5 +1,6 @@
 // views/profile/profile_view.dart
 import 'package:e_market/core/utils/app_colors.dart';
+import 'package:e_market/features/auth/presentation/widgets/edit_name.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -107,7 +108,14 @@ class ProfileView extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      _tile(Icons.person_outline, 'Edit Profile', () {}),
+                      _tile(Icons.person_outline, 'Edit Profile', () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditName(),
+                          ),
+                        );
+                      }),
                       _divider(),
                       _tile(Icons.shopping_bag_outlined, 'My Orders', () {}),
                       const SizedBox(height: 28),
