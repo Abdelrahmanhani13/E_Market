@@ -106,4 +106,21 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
+  Future<void> updateUser(Map<String, dynamic> updates) async {
+    try {
+      emit(GetUserDataLoading());
+
+      final userId = client.auth.currentUser?.id;
+      if (userId == null) {
+        emit(GetUserDataFailure('No user logged in'));
+        return;
+      }
+
+      await client.from('users').update(updates).eq('id', userId);
+
+      await fetchUser();
+    } catch (e) {
+      emit(GetUserDataFailure(e.toString()));
+    }
+  }
 }
