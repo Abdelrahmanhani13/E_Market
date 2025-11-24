@@ -9,7 +9,7 @@ class StoreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Welcome to Store'),surfaceTintColor: Colors.white,backgroundColor: Colors.white,),
+      appBar: AppBar(title: Center(child: const Text('Welcome to Store')),surfaceTintColor: Colors.white,backgroundColor: Colors.white,),
       body: ListView(
         children: [
           const Gap(20),
