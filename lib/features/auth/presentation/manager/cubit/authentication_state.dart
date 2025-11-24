@@ -18,3 +18,10 @@ final class SignUpFailure extends AuthenticationState {
   final String message;
   SignUpFailure({required this.message});
 }
+
+final class LogoutLoading extends AuthenticationState {}
+final class LogoutSuccess extends AuthenticationState {}
+final class LogoutFailure extends AuthenticationState {
+  final String message;
+  LogoutFailure({required this.message});
+}

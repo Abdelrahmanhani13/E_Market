@@ -1,3 +1,4 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,6 +33,19 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
      catch (e) {
       emit(SignUpFailure(message: e.toString()));
+    }
+  }
+
+  Future<void> signOut() async {
+    emit(LogoutLoading());
+    try {
+      await client.auth.signOut();
+      emit(LogoutSuccess());
+    }on AuthException catch (e) {
+      emit(LogoutFailure(message: e.message));
+    }
+     catch (e) {
+      emit(LogoutFailure(message: e.toString()));
     }
   }
 }
