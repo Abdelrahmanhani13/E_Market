@@ -1,4 +1,5 @@
 import 'package:e_market/features/auth/presentation/manager/cubit/authentication_cubit.dart';
+import 'package:e_market/features/auth/presentation/views/login_view.dart';
 import 'package:e_market/features/nav_bar/presentation/views/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,13 +21,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SupabaseClient client = Supabase.instance.client;
     return BlocProvider(
       create: (context) => AuthenticationCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'E Market',
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-        home: BottomNavBar(),
+        home: client.auth.currentUser != null ? BottomNavBar() : LoginView(),
       ),
     );
   }
