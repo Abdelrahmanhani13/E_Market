@@ -82,6 +82,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
+  // ✅ fetchUser مُصلح
   Future<void> fetchUser() async {
     try {
       emit(GetUserDataLoading());
@@ -92,35 +93,44 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         return;
       }
 
-      // Fetch from your users table
+      // ✅ استخدم user_id مش id
       final response = await client
           .from('users')
           .select()
-          .eq('id', userId)
+          .eq('user_id', userId) // ✅ صح
           .single();
 
       final user = UserModel.fromJson(response);
-      emit(GetUserDataSuccess(user));
+      emit(GetUserDataSuccess(userModel: user)); // ✅ userModel
+    } on PostgrestException catch (e) {
+      emit(GetUserDataFailure(e.message));
     } catch (e) {
       emit(GetUserDataFailure(e.toString()));
     }
   }
 
+  // ✅ updateUser مُصلح
   Future<void> updateUser(Map<String, dynamic> updates) async {
     try {
-      emit(GetUserDataLoading());
+      emit(UpdateUserDataLoading()); // ✅ state خاص بالـ update
 
       final userId = client.auth.currentUser?.id;
       if (userId == null) {
-        emit(GetUserDataFailure('No user logged in'));
+        emit(UpdateUserDataFailure('No user logged in'));
         return;
       }
 
-      await client.from('users').update(updates).eq('id', userId);
+      // ✅ استخدم user_id مش id
+      await client.from('users').update(updates).eq('user_id', userId); // ✅ صح
 
+      // اجلب البيانات الجديدة
       await fetchUser();
+
+      emit(UpdateUserDataSuccess()); // ✅ state للنجاح
+    } on PostgrestException catch (e) {
+      emit(UpdateUserDataFailure(e.message));
     } catch (e) {
-      emit(GetUserDataFailure(e.toString()));
+      emit(UpdateUserDataFailure(e.toString()));
     }
   }
 }

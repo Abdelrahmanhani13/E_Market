@@ -48,7 +48,9 @@ class _LoginViewState extends State<LoginView> {
         return Scaffold(
           extendBodyBehindAppBar: true,
           body: state is LoginLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ))
               : Container(
                   height: double.infinity,
                   width: double.infinity,
