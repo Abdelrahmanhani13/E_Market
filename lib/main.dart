@@ -1,5 +1,7 @@
+import 'package:e_market/features/auth/presentation/manager/cubit/authentication_cubit.dart';
 import 'package:e_market/features/nav_bar/presentation/views/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -18,11 +20,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'E Market',
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: BottomNavBar(),
+    return BlocProvider(
+      create: (context) => AuthenticationCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'E Market',
+        theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+        home: BottomNavBar(),
+      ),
     );
   }
 }
