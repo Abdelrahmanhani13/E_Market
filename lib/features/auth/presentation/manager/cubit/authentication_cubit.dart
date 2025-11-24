@@ -21,4 +21,17 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       emit(LoginFailure(message: e.toString()));
     }
   }
+
+  Future<void> signUp({required String email, required String password , required String name}) async {
+    emit(SignUpLoading());
+    try {
+      await client.auth.signUp(email: email, password: password);
+      emit(SignUpSuccess());
+    }on AuthException catch (e) {
+      emit(SignUpFailure(message: e.message));
+    }
+     catch (e) {
+      emit(SignUpFailure(message: e.toString()));
+    }
+  }
 }

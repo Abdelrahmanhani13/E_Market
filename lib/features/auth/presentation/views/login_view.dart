@@ -1,9 +1,11 @@
 // views/auth/login_view.dart
+
 import 'package:e_market/core/utils/app_colors.dart';
 import 'package:e_market/core/widgets/custom_text_form_field.dart';
 import 'package:e_market/features/auth/presentation/manager/cubit/authentication_cubit.dart';
 import 'package:e_market/features/auth/presentation/views/forget_password_view.dart';
 import 'package:e_market/features/auth/presentation/views/signup_view.dart';
+import 'package:e_market/features/nav_bar/presentation/views/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -35,6 +37,11 @@ class _LoginViewState extends State<LoginView> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
+        }else if (state is LoginSuccess) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNavBar()),
+          );
         }
       },
       builder: (context, state) {
