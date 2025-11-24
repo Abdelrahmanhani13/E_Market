@@ -48,4 +48,17 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       emit(LogoutFailure(message: e.toString()));
     }
   }
+
+  Future<void> resetPassword({required String email}) async {
+    emit(ResetPasswordLoading());
+    try {
+      await client.auth.resetPasswordForEmail(email);
+      emit(ResetPasswordSuccess());
+    }on AuthException catch (e) {
+      emit(ResetPasswordFailure(message: e.message));
+    }
+     catch (e) {
+      emit(ResetPasswordFailure(message: e.toString()));
+    }
+  }
 }

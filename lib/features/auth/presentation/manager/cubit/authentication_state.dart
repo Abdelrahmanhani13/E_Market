@@ -25,3 +25,10 @@ final class LogoutFailure extends AuthenticationState {
   final String message;
   LogoutFailure({required this.message});
 }
+
+final class ResetPasswordLoading extends AuthenticationState {}
+final class ResetPasswordSuccess extends AuthenticationState {}
+final class ResetPasswordFailure extends AuthenticationState {
+  final String message;
+  ResetPasswordFailure({required this.message});
+}
