@@ -1,8 +1,6 @@
-// views/auth/sign_up_view.dart
 import 'package:e_market/core/utils/app_colors.dart';
 import 'package:e_market/core/widgets/custom_text_form_field.dart';
 import 'package:e_market/features/auth/presentation/manager/cubit/authentication_cubit.dart';
-import 'package:e_market/features/auth/presentation/views/login_view.dart';
 import 'package:e_market/features/nav_bar/presentation/views/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,27 +34,66 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
+        // ✅ لو SignUp فشل
         if (state is SignUpFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
-        } else if (state is SignUpSuccess) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => BottomNavBar()),
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
           );
-          ScaffoldMessenger.of(
+        }
+
+        // ✅ لو AddUserData فشل
+        if (state is AddUserDataFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Failed to save user data: ${state.message}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+
+        // ✅ لو SignUp و AddUserData نجحوا
+        if (state is AddUserDataSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Successfully Signed Up! ✅'),
+              backgroundColor: Colors.green,
+            ),
+          );
+
+          // ✅ روح على BottomNavBar وامسح كل الصفحات اللي قبلها
+          Navigator.pushAndRemoveUntil(
             context,
-          ).showSnackBar(SnackBar(content: Text('Successfully Signed Up')));
+            MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: context.read<AuthenticationCubit>(),
+                child:  BottomNavBar(),
+              ),
+            ),
+            (route) => false, // امسح كل الصفحات
+          );
         }
       },
       builder: (context, state) {
         return Scaffold(
           extendBodyBehindAppBar: true,
-          body: state is SignUpLoading
-              ? const Center(child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),)
+          // ✅ لو بيعمل SignUp أو بيضيف بيانات اليوزر
+          body: (state is SignUpLoading || state is AddUserDataLoading)
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(color: AppColors.primaryColor),
+                      Gap(16),
+                      Text(
+                        'Creating your account...',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               : Container(
                   height: double.infinity,
                   width: double.infinity,
@@ -66,9 +103,7 @@ class _SignUpViewState extends State<SignUpView> {
                       end: Alignment.bottomCenter,
                       colors: [
                         AppColors.primaryColor,
-                        // ignore: deprecated_member_use
                         AppColors.primaryColor.withOpacity(0.8),
-                        // ignore: deprecated_member_use
                         AppColors.primaryColor.withOpacity(0.5),
                       ],
                     ),
@@ -87,7 +122,6 @@ class _SignUpViewState extends State<SignUpView> {
                                 Container(
                                   padding: const EdgeInsets.all(22),
                                   decoration: BoxDecoration(
-                                    // ignore: deprecated_member_use
                                     color: Colors.white.withOpacity(0.25),
                                     shape: BoxShape.circle,
                                     border: Border.all(
@@ -96,7 +130,6 @@ class _SignUpViewState extends State<SignUpView> {
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        // ignore: deprecated_member_use
                                         color: Colors.black.withOpacity(0.2),
                                         blurRadius: 20,
                                         offset: const Offset(0, 10),
@@ -128,21 +161,17 @@ class _SignUpViewState extends State<SignUpView> {
                               ],
                             ),
                             const Gap(60),
-
                             Container(
                               padding: const EdgeInsets.all(32),
                               decoration: BoxDecoration(
-                                // ignore: deprecated_member_use
                                 color: Colors.white.withOpacity(0.16),
                                 borderRadius: BorderRadius.circular(32),
                                 border: Border.all(
-                                  // ignore: deprecated_member_use
                                   color: Colors.white.withOpacity(0.3),
                                   width: 1.8,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    // ignore: deprecated_member_use
                                     color: Colors.black.withOpacity(0.3),
                                     blurRadius: 30,
                                     offset: const Offset(0, 15),
@@ -184,8 +213,10 @@ class _SignUpViewState extends State<SignUpView> {
                                         () => _obscurePassword =
                                             !_obscurePassword,
                                       ),
-                                      icon: const Icon(
-                                        Icons.visibility,
+                                      icon: Icon(
+                                        _obscurePassword
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -202,8 +233,10 @@ class _SignUpViewState extends State<SignUpView> {
                                         () =>
                                             _obscureConfirm = !_obscureConfirm,
                                       ),
-                                      icon: const Icon(
-                                        Icons.visibility,
+                                      icon: Icon(
+                                        _obscureConfirm
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -215,18 +248,55 @@ class _SignUpViewState extends State<SignUpView> {
                                     height: 58,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        if (_formKey.currentState!.validate() &&
-                                            _passwordController.text ==
-                                                _confirmController.text) {
-                                          context
-                                              .read<AuthenticationCubit>()
-                                              .signUp(
-                                                email: _emailController.text,
-                                                password:
-                                                    _passwordController.text,
-                                                name: _nameController.text,
-                                              );
+                                        // ✅ تحقق من الـ validation
+                                        if (!_formKey.currentState!
+                                            .validate()) {
+                                          return;
                                         }
+
+                                        // ✅ تحقق إن الـ passwords متطابقة
+                                        if (_passwordController.text !=
+                                            _confirmController.text) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Passwords do not match!',
+                                              ),
+                                              backgroundColor: Colors.orange,
+                                            ),
+                                          );
+                                          return;
+                                        }
+
+                                        // ✅ تحقق إن الاسم مش فاضي
+                                        if (_nameController.text
+                                            .trim()
+                                            .isEmpty) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Please enter your name',
+                                              ),
+                                              backgroundColor: Colors.orange,
+                                            ),
+                                          );
+                                          return;
+                                        }
+
+                                        // ✅ كل حاجة تمام، نادي على signUp
+                                        context
+                                            .read<AuthenticationCubit>()
+                                            .signUp(
+                                              email: _emailController.text
+                                                  .trim(),
+                                              password:
+                                                  _passwordController.text,
+                                              name: _nameController.text.trim(),
+                                            );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.white,
@@ -256,13 +326,10 @@ class _SignUpViewState extends State<SignUpView> {
                                         style: TextStyle(color: Colors.white70),
                                       ),
                                       GestureDetector(
-                                        onTap: () => Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginView(),
-                                          ),
-                                        ),
+                                        onTap: () {
+                                          // ✅ استخدم pop بدل pushReplacement
+                                          Navigator.pop(context);
+                                        },
                                         child: const Text(
                                           'Login Now',
                                           style: TextStyle(

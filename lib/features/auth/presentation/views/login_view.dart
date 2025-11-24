@@ -1,5 +1,3 @@
-// views/auth/login_view.dart
-
 import 'package:e_market/core/utils/app_colors.dart';
 import 'package:e_market/core/widgets/custom_text_form_field.dart';
 import 'package:e_market/features/auth/presentation/manager/cubit/authentication_cubit.dart';
@@ -33,24 +31,72 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
+        // ✅ لو Login فشل
         if (state is LoginFailure) {
-          ScaffoldMessenger.of(
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
+          );
+        }
+
+        // ✅ لو Login نجح
+        if (state is LoginSuccess) {
+          // اجلب بيانات اليوزر
+          context.read<AuthenticationCubit>().fetchUser();
+        }
+
+        // ✅ لما بيانات اليوزر تتجاب بنجاح
+        if (state is GetUserDataSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Welcome back! ✅'),
+              backgroundColor: Colors.green,
+            ),
+          );
+
+          // روح على BottomNavBar وامسح كل الصفحات اللي قبلها
+          Navigator.pushAndRemoveUntil(
             context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
-        }else if (state is LoginSuccess) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => BottomNavBar()),
+            MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: context.read<AuthenticationCubit>(),
+                child: BottomNavBar(),
+              ),
+            ),
+            (route) => false,
+          );
+        }
+
+        // ✅ لو فشل جلب بيانات اليوزر
+        if (state is GetUserDataFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Failed to load user data: ${state.message}'),
+              backgroundColor: Colors.red,
+            ),
           );
         }
       },
       builder: (context, state) {
         return Scaffold(
           extendBodyBehindAppBar: true,
-          body: state is LoginLoading
-              ? const Center(child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ))
+          // ✅ لو بيعمل Login أو بيجلب بيانات اليوزر
+          body: (state is LoginLoading || state is GetUserDataLoading)
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(color: AppColors.primaryColor),
+                      Gap(16),
+                      Text(
+                        'Signing in...',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               : Container(
                   height: double.infinity,
                   width: double.infinity,
@@ -60,9 +106,7 @@ class _LoginViewState extends State<LoginView> {
                       end: Alignment.bottomCenter,
                       colors: [
                         AppColors.primaryColor,
-                        // ignore: deprecated_member_use
                         AppColors.primaryColor.withOpacity(0.8),
-                        // ignore: deprecated_member_use
                         AppColors.primaryColor.withOpacity(0.5),
                       ],
                     ),
@@ -83,7 +127,6 @@ class _LoginViewState extends State<LoginView> {
                                 Container(
                                   padding: const EdgeInsets.all(22),
                                   decoration: BoxDecoration(
-                                    // ignore: deprecated_member_use
                                     color: Colors.white.withOpacity(0.25),
                                     shape: BoxShape.circle,
                                     border: Border.all(
@@ -92,7 +135,6 @@ class _LoginViewState extends State<LoginView> {
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        // ignore: deprecated_member_use
                                         color: Colors.black.withOpacity(0.2),
                                         blurRadius: 20,
                                         offset: const Offset(0, 10),
@@ -126,21 +168,18 @@ class _LoginViewState extends State<LoginView> {
 
                             const Gap(60),
 
-                            // Login Card (آمن بدون BackdropFilter)
+                            // Login Card
                             Container(
                               padding: const EdgeInsets.all(32),
                               decoration: BoxDecoration(
-                                // ignore: deprecated_member_use
                                 color: Colors.white.withOpacity(0.16),
                                 borderRadius: BorderRadius.circular(32),
                                 border: Border.all(
-                                  // ignore: deprecated_member_use
                                   color: Colors.white.withOpacity(0.3),
                                   width: 1.8,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    // ignore: deprecated_member_use
                                     color: Colors.black.withOpacity(0.3),
                                     blurRadius: 30,
                                     offset: const Offset(0, 15),
@@ -184,8 +223,10 @@ class _LoginViewState extends State<LoginView> {
                                       onPressed: () => setState(
                                         () => _obscureText = !_obscureText,
                                       ),
-                                      icon: const Icon(
-                                        Icons.visibility,
+                                      icon: Icon(
+                                        _obscureText
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -196,14 +237,23 @@ class _LoginViewState extends State<LoginView> {
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: TextButton(
-                                      onPressed: () =>
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ForgotPasswordView(),
-                                            ),
+                                      onPressed: () {
+                                        // ✅ استخدم push بدل pushReplacement
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                BlocProvider.value(
+                                                  value: context
+                                                      .read<
+                                                        AuthenticationCubit
+                                                      >(),
+                                                  child:
+                                                      const ForgotPasswordView(),
+                                                ),
                                           ),
+                                        );
+                                      },
                                       child: const Text(
                                         'Forgot Password?',
                                         style: TextStyle(color: Colors.white70),
@@ -217,10 +267,36 @@ class _LoginViewState extends State<LoginView> {
                                     height: 58,
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        // ✅ تحقق من الـ validation
+                                        if (!_formKey.currentState!
+                                            .validate()) {
+                                          return;
+                                        }
+
+                                        // ✅ تحقق إن الحقول مش فاضية
+                                        if (_emailController.text
+                                                .trim()
+                                                .isEmpty ||
+                                            _passwordController.text.isEmpty) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Please fill all fields',
+                                              ),
+                                              backgroundColor: Colors.orange,
+                                            ),
+                                          );
+                                          return;
+                                        }
+
+                                        // ✅ كل حاجة تمام، نادي على login
                                         context
                                             .read<AuthenticationCubit>()
                                             .login(
-                                              email: _emailController.text,
+                                              email: _emailController.text
+                                                  .trim(),
                                               password:
                                                   _passwordController.text,
                                             );
@@ -254,13 +330,22 @@ class _LoginViewState extends State<LoginView> {
                                         style: TextStyle(color: Colors.white70),
                                       ),
                                       GestureDetector(
-                                        onTap: () => Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SignUpView(),
-                                          ),
-                                        ),
+                                        onTap: () {
+                                          // ✅ استخدم push بدل pushReplacement
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  BlocProvider.value(
+                                                    value: context
+                                                        .read<
+                                                          AuthenticationCubit
+                                                        >(),
+                                                    child: const SignUpView(),
+                                                  ),
+                                            ),
+                                          );
+                                        },
                                         child: const Text(
                                           'Sign Up',
                                           style: TextStyle(
