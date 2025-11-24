@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SupabaseClient client = Supabase.instance.client;
     return BlocProvider(
-      create: (context) => AuthenticationCubit(),
+      create: (context) => AuthenticationCubit()..fetchUser(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'E Market',

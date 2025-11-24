@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:e_market/features/auth/data/models/user_model.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -80,4 +81,29 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       emit(AddUserDataFailure(message: e.toString()));
     }
   }
+
+  Future<void> fetchUser() async {
+    try {
+      emit(GetUserDataLoading());
+
+      final userId = client.auth.currentUser?.id;
+      if (userId == null) {
+        emit(GetUserDataFailure('No user logged in'));
+        return;
+      }
+
+      // Fetch from your users table
+      final response = await client
+          .from('users')
+          .select()
+          .eq('id', userId)
+          .single();
+
+      final user = UserModel.fromJson(response);
+      emit(GetUserDataSuccess(user));
+    } catch (e) {
+      emit(GetUserDataFailure(e.toString()));
+    }
+  }
+
 }
